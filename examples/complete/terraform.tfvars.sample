@@ -1,0 +1,7 @@
+global_monitor_domain          = "id.example.com"
+tailscale_domain               = "adjective-animal.ts.net"
+tailscale_tailnet              = "example.com"
+tailscale_client_id            = "123"
+tailscale_client_secret        = "ts..."
+tailscale_tags_global_monitor  = ["tag:foobar"]
+global_monitor_admin_subdomain = "foobar"

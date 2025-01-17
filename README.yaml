@@ -1,0 +1,21 @@
+name: terraform-aws-ecs-global-monitor
+license: GPL3
+gitlab_repo: guardianproject-ops/terraform-aws-ecs-global-monitor
+
+description: Terraform module for deploying Global Monitor to AWS ECS w/ Fargate
+
+introduction: |-
+
+usage: |-
+
+  See [examples/simple](./examples/simple)
+
+
+include:
+  - docs/terraform.md
+
+contributors:
+  - name: "Abel Luck"
+    gitlab: "abelxluck"
+    gravatar: 0f605397e0ead93a68e1be26dc26481a
+
