@@ -89,7 +89,7 @@ module "example" {
   db_global_monitor_host             = module.db.address
   db_global_monitor_name             = "global_monitor"
   rds_master_username                = module.db.admin_username
-  rds_resource_id                    = module.db.resource_id
+  # rds_resource_id                    = module.db.resource_id
   rds_master_user_secret_arn         = module.db.master_user_secret_arn
   global_monitor_frontend_node_count = 1
   global_monitor_api_node_count      = 1
@@ -100,7 +100,6 @@ module "example" {
   tailscale_client_secret                 = var.tailscale_client_secret
   tailscale_tailnet                       = var.tailscale_tailnet
   tailscale_tags_global_monitor           = var.tailscale_tags_global_monitor
-  global_monitor_admin_subdomain          = var.global_monitor_admin_subdomain
   deletion_protection_enabled             = false
   task_cpu                                = 2048
   task_memory                             = 4096

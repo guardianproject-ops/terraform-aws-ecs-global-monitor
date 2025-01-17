@@ -25,10 +25,6 @@ locals {
       value = var.db_global_monitor_password
     },
     {
-      name = "DB_URL"
-      value = local.db_url
-    },
-    {
       name  = "DB_ADDR"
       value = local.db_addr
     },
@@ -192,7 +188,7 @@ module "global_monitor_frontend" {
 }
 
 resource "aws_iam_role_policy_attachment" "global_monitor_exec" {
-  role       = module.global_monitor.ecs_task_exec_role_name
+  role       = module.global_monitor_frontend.ecs_task_exec_role_name
   policy_arn = aws_iam_policy.global_monitor_exec.arn
 }
 
@@ -211,7 +207,7 @@ data "aws_iam_policy_document" "global_monitor_exec" {
       "kms:Decrypt",
     ]
     resources = compact([
-      aws_ssm_parameter.global_monitor_password[0].arn,
+      # aws_ssm_parameter.global_monitor_password[0].arn,
       local.rds_master_user_secret_arn,
       aws_ssm_parameter.global_monitor_tls_cert[0].arn,
       aws_ssm_parameter.global_monitor_tls_key[0].arn,
@@ -222,7 +218,7 @@ data "aws_iam_policy_document" "global_monitor_exec" {
 
 resource "aws_iam_role_policy_attachment" "global_monitor_task" {
   count      = module.this.enabled ? 1 : 0
-  role       = module.global_monitor.ecs_task_role_name
+  role       = module.global_monitor_frontend.ecs_task_role_name
   policy_arn = aws_iam_policy.global_monitor_task[0].arn
 }
 
@@ -230,20 +226,6 @@ resource "aws_iam_policy" "global_monitor_task" {
   count  = module.this.enabled ? 1 : 0
   name   = "${module.label_global_monitor.id}-global-monitor-task-perms"
   policy = data.aws_iam_policy_document.global_monitor_task.json
-}
-
-data "aws_iam_policy_document" "global_monitor_task_rds_iam" {
-
-  statement {
-    effect = "Allow"
-    actions = [
-      "rds-db:connect"
-    ]
-    resources = [
-      local.rds_iam_user_arn
-      #for debugging #"arn:aws:rds-db:*:*:dbuser:*/*"
-    ]
-  }
 }
 
 data "aws_iam_policy_document" "global_monitor_task_secrets" {
@@ -268,8 +250,7 @@ data "aws_iam_policy_document" "global_monitor_task" {
   source_policy_documents = concat(
     [
       data.aws_iam_policy_document.global_monitor_task_secrets.json,
-      data.aws_iam_policy_document.global_monitor_task_s3_cluster.json
     ],
-    var.rds_iam_auth_enabled ? [data.aws_iam_policy_document.global_monitor_task_rds_iam.json] : [],
+[],
   )
 }

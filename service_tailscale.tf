@@ -23,7 +23,6 @@ module "service_tailscale" {
   tailscale_client_id          = var.tailscale_client_id
   tailscale_client_secret      = var.tailscale_client_secret
   ecs_cluster_arn              = module.ecs_cluster.arn
-  tailscale_hostname           = var.global_monitor_admin_subdomain
 
   # the container uses service connect to be able to dynamically reference the global monitor containers by dns "global-monitor-frontend"
   service_connect_configurations = [{
