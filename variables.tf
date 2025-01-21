@@ -42,7 +42,7 @@ EOT
 
 variable "global_monitor_frontend_container_image" {
   type        = string
-  default     = "registry.gitlab.com/guardianproject/aegean/global-monitor-monorepo/frontend:main"
+  default     = "registry.gitlab.com/guardianproject/bypass-censorship/global-monitor-monorepo/frontend:main"
   description = <<EOT
 The fully qualified container image for global monitor frontend.
 EOT
@@ -50,7 +50,7 @@ EOT
 
 variable "global_monitor_api_container_image" {
   type        = string
-  default     = "registry.gitlab.com/guardianproject/aegean/global-monitor-monorepo/api:main"
+  default     = "registry.gitlab.com/guardianproject/bypass-censorship/global-monitor-monorepo/api:main"
   description = <<EOT
 The fully qualified container image for global monitor api.
 EOT
@@ -58,7 +58,7 @@ EOT
 
 variable "global_monitor_worker_container_image" {
   type        = string
-  default     = "registry.gitlab.com/guardianproject/aegean/global-monitor-monorepo/worker:main"
+  default     = "registry.gitlab.com/guardianproject/bypass-censorship/global-monitor-monorepo/worker:main"
   description = <<EOT
 The fully qualified container image for global monitor worker.
 EOT
@@ -217,7 +217,7 @@ EOT
 
 variable "port_global_monitor_api" {
   type        = number
-  default     = 3001
+  default     = 3000
   description = <<EOT
 The port number for global monitor api
 EOT

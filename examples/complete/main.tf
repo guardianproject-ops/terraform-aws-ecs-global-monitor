@@ -103,9 +103,9 @@ module "example" {
   deletion_protection_enabled             = false
   task_cpu                                = 2048
   task_memory                             = 4096
-  global_monitor_frontend_container_image = "registry.gitlab.com/guardianproject/aegean/global-monitor-monorepo/frontend:main"
-  global_monitor_api_container_image      = "registry.gitlab.com/guardianproject/aegean/global-monitor-monorepo/api:main"
-  global_monitor_worker_container_image   = "registry.gitlab.com/guardianproject/aegean/global-monitor-monorepo/worker:main"
+  global_monitor_frontend_container_image = "registry.gitlab.com/guardianproject/bypass-censorship/global-monitor-monorepo/frontend:main"
+  global_monitor_api_container_image      = "registry.gitlab.com/guardianproject/bypass-censorship/global-monitor-monorepo/api:main"
+  global_monitor_worker_container_image   = "registry.gitlab.com/guardianproject/bypass-censorship/global-monitor-monorepo/worker:main"
 }
 
 output "alb" {
