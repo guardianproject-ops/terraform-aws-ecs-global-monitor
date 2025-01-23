@@ -230,7 +230,7 @@ EOT
 
 variable "port_global_monitor_api" {
   type        = number
-  default     = 3000
+  default     = 3001
   description = <<EOT
 The port number for global monitor api
 EOT

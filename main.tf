@@ -95,18 +95,17 @@ module "label_alb" {
 }
 
 module "alb" {
-  source             = "cloudposse/alb/aws"
-  version            = "2.2.0"
-  context            = module.label_alb.context
-  vpc_id             = var.vpc_id
-  security_group_ids = [aws_security_group.alb[0].id]
-  subnet_ids         = var.public_subnet_ids
-
-  ip_address_type = "ipv4"
-  http_enabled    = true
-  https_enabled   = true
-  http2_enabled   = true
-  #http_redirect               = true
+  source                                  = "cloudposse/alb/aws"
+  version                                 = "2.2.0"
+  context                                 = module.label_alb.context
+  vpc_id                                  = var.vpc_id
+  security_group_ids                      = [aws_security_group.alb[0].id]
+  subnet_ids                              = var.public_subnet_ids
+  ip_address_type                         = "ipv4"
+  http_enabled                            = true
+  https_enabled                           = true
+  http2_enabled                           = true
+  http_redirect                           = true
   access_logs_enabled                     = true
   http_ingress_cidr_blocks                = ["0.0.0.0/0"]
   https_ingress_cidr_blocks               = ["0.0.0.0/0"]
@@ -136,7 +135,6 @@ module "ecs_cluster" {
   capacity_providers_fargate_spot = false
   kms_key_id                      = local.kms_key_arn
 }
-
 
 ################
 # CLOUDWATCH
