@@ -46,7 +46,7 @@ resource "tls_self_signed_cert" "global_monitor" {
     common_name  = module.this.id
     organization = "Guardian Project Ops"
   }
-  validity_period_hours = 12
+  validity_period_hours = 24 /* hours */ * 365 /* days */ * 10 /* years */
   allowed_uses = [
     "key_encipherment",
     "digital_signature",
