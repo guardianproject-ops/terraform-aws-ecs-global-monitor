@@ -1,5 +1,4 @@
 data "aws_region" "this" {}
-data "aws_caller_identity" "this" {}
 locals {
   region                       = data.aws_region.this.name
   create_kms_key               = var.kms_key_arn == null ? true : false

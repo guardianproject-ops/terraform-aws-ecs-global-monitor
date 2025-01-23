@@ -109,8 +109,8 @@ module "global_monitor_frontend" {
   container_name       = "global_monitor_frontend"
   container_definition = module.global_monitor_frontend_def.json_map_encoded
   container_port       = local.port_global_monitor_frontend
-  task_cpu             = var.task_cpu
-  task_memory          = var.task_memory
+  task_cpu             = var.task_cpu_global_monitor_frontend
+  task_memory          = var.task_memory_global_monitor_frontend
   desired_count        = var.global_monitor_frontend_node_count
 
   init_containers = concat(
@@ -256,8 +256,8 @@ module "global_monitor_api" {
   container_name       = "global_monitor_api"
   container_definition = module.global_monitor_api_def.json_map_encoded
   container_port       = local.port_global_monitor_api
-  task_cpu             = var.task_cpu
-  task_memory          = var.task_memory
+  task_cpu             = var.task_cpu_global_monitor_api
+  task_memory          = var.task_memory_global_monitor_api
   desired_count        = var.global_monitor_api_node_count
 
   init_containers = concat(
@@ -387,8 +387,8 @@ module "global_monitor_worker" {
   desired_count                      = var.global_monitor_worker_node_count
   deployment_maximum_percent         = 100
   deployment_minimum_healthy_percent = 0
-  task_cpu                           = var.task_cpu
-  task_memory                        = var.task_memory
+  task_cpu                           = var.task_cpu_global_monitor_worker
+  task_memory                        = var.task_memory_global_monitor_worker
   container_definition_json          = module.global_monitor_worker_def[0].json_map_encoded
 }
 

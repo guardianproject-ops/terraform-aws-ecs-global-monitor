@@ -79,7 +79,6 @@ module "example" {
   context                            = module.this.context
   vpc_id                             = module.vpc.vpc_id
   public_subnet_ids                  = module.subnets.public_subnet_ids
-  public_subnet_cidrs                = module.subnets.public_subnet_cidrs
   private_subnet_ids                 = module.subnets.private_subnet_ids
   global_monitor_acm_certificate_arn = ""
   db_global_monitor_host             = module.db.address

@@ -10,13 +10,6 @@ The ids for the public subnets that ECS will be deployed into
 EOT
 }
 
-variable "public_subnet_cidrs" {
-  type        = list(string)
-  description = <<EOT
-The cidr blocks for the public subnets that ECS will be deployed into
-EOT
-}
-
 variable "private_subnet_ids" {
   type        = list(string)
   description = <<EOT
@@ -120,14 +113,34 @@ variable "tailscale_client_secret" {
   description = "The OIDC client secret paired with `tailscale_client_id`"
 }
 
-variable "task_cpu" {
+variable "task_cpu_global_monitor_api" {
   type        = number
-  description = "The number of CPU units used by the task. If unspecified, it will default to `container_cpu`. If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+  description = "The number of CPU units used by the API task.  If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
 }
 
-variable "task_memory" {
+variable "task_memory_global_monitor_api" {
   type        = number
-  description = "The amount of memory (in MiB) used by the task. If unspecified, it will default to `container_memory`. If using Fargate launch type `task_memory` must match supported cpu value (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+  description = "The amount of memory (in MiB) used by the API task. If using Fargate launch type `task_memory` must match supported cpu value (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+}
+
+variable "task_cpu_global_monitor_frontend" {
+  type        = number
+  description = "The number of CPU units used by the FRONTEND task.  If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+}
+
+variable "task_memory_global_monitor_frontend" {
+  type        = number
+  description = "The amount of memory (in MiB) used by the FRONTEND task. If using Fargate launch type `task_memory` must match supported cpu value (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+}
+
+variable "task_cpu_global_monitor_worker" {
+  type        = number
+  description = "The number of CPU units used by the WORKER task.  If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+}
+
+variable "task_memory_global_monitor_worker" {
+  type        = number
+  description = "The amount of memory (in MiB) used by the WORKER task. If using Fargate launch type `task_memory` must match supported cpu value (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
 }
 
 variable "global_monitor_acm_certificate_arn" {
