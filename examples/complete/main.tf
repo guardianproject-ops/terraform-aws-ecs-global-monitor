@@ -75,12 +75,8 @@ module "db" {
 ################
 
 module "example" {
-  source = "../.."
-
-  namespace = "gpex"
-  name      = "global-monitor-stack"
-  stage     = "dev"
-
+  source                             = "../.."
+  context                            = module.this.context
   vpc_id                             = module.vpc.vpc_id
   public_subnet_ids                  = module.subnets.public_subnet_ids
   public_subnet_cidrs                = module.subnets.public_subnet_cidrs
