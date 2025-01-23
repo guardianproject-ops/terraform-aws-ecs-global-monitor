@@ -389,7 +389,7 @@ module "global_monitor_worker" {
   deployment_minimum_healthy_percent = 0
   task_cpu                           = var.task_cpu_global_monitor_worker
   task_memory                        = var.task_memory_global_monitor_worker
-  container_definition_json          = module.global_monitor_worker_def[0].json_map_encoded
+  container_definition_json          = module.global_monitor_worker_def.json_map_encoded
 }
 
 resource "aws_iam_role_policy_attachment" "global_monitor_worker_exec" {
