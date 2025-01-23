@@ -38,18 +38,6 @@ module "label_api_short" {
 locals {
   global_monitor_environment = [
     {
-      name  = "HTTPS_CERTIFICATE_FILE"
-      value = "/secrets/server.crt.pem"
-    },
-    {
-      name  = "HTTPS_CERTIFICATE_KEY_FILE"
-      value = "/secrets/server.key.pem"
-    },
-    {
-      name  = "HTTPS_CERTIFICATES_RELOAD_PERIOD"
-      value = "-1"
-    },
-    {
       name  = "DB_PASSWORD"
       value = var.db_global_monitor_password
     },
@@ -73,11 +61,6 @@ locals {
     container_definition = module.postgres_init_sidecar[0].json_map_encoded
     condition            = "SUCCESS"
   }
-
-  container_def_secrets_init = {
-    container_definition = module.secrets_init_sidecar.json_map_encoded
-    condition            = "SUCCESS"
-  }
 }
 
 # This is the container definition for global monitor frontend
@@ -94,13 +77,6 @@ module "global_monitor_frontend_def" {
       containerPath = "/secrets"
       readOnly      = true
       sourceVolume  = "global-monitor-secrets"
-    }
-  ]
-
-  container_depends_on = [
-    {
-      condition     = "SUCCESS"
-      containerName = "secrets-init"
     }
   ]
 
@@ -143,8 +119,8 @@ module "global_monitor_frontend" {
   desired_count        = var.global_monitor_frontend_node_count
 
   init_containers = concat(
-    var.rds_init_global_monitor_db ? [local.container_def_postgres_init] : [],
-    [local.container_def_secrets_init]
+    (var.rds_init_global_monitor_db ? [local.container_def_postgres_init] : []),
+    [/*others here*/]
   )
 
   bind_mount_volumes = [
@@ -243,14 +219,8 @@ module "global_monitor_api_def" {
     }
   ]
 
-  container_depends_on = [
-    {
-      condition     = "SUCCESS"
-      containerName = "secrets-init"
-    }
-  ]
-
   secrets = []
+
 
   port_mappings = [
     {
@@ -286,11 +256,6 @@ module "global_monitor_api" {
   launch_type            = "FARGATE"
   vpc_id                 = var.vpc_id
   use_alb_security_group = true
-
-  init_containers = concat(
-    [local.container_def_secrets_init]
-  )
-
   bind_mount_volumes = [
     {
       name = "global-monitor-secrets"
@@ -453,8 +418,6 @@ data "aws_iam_policy_document" "global_monitor_exec" {
     resources = compact([
       # aws_ssm_parameter.global_monitor_password[0].arn,
       local.rds_master_user_secret_arn,
-      aws_ssm_parameter.global_monitor_tls_cert[0].arn,
-      aws_ssm_parameter.global_monitor_tls_key[0].arn,
       local.kms_key_arn
     ])
   }
@@ -477,8 +440,6 @@ data "aws_iam_policy_document" "global_monitor_task_secrets" {
       "kms:Decrypt",
     ]
     resources = [
-      aws_ssm_parameter.global_monitor_tls_cert[0].arn,
-      aws_ssm_parameter.global_monitor_tls_key[0].arn,
       local.kms_key_arn
     ]
   }
